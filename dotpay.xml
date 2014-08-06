@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<install version="1.5" type="plugin" group="vmpayment" method="upgrade">
+    <name>VM - Płatności, Dotpay</name>
+    <creationDate>2014-07-09</creationDate>
+    <author>Dodatkijoomla.pl</author>
+    <copyright>Copyright (c) 2014 DodatkiJoomla.pl</copyright>
+    <license>GNU/GPL v2</license>
+    <authorEmail>kontakt@dodatkijoomla.pl</authorEmail>
+    <authorUrl>http://dodatkijoomla.pl</authorUrl>
+    <version>1.4.0</version>
+    <description>Plugin płatności online - Dotpay.</description>
+    <languages></languages>
+    <files>
+		<filename plugin="dotpay">dotpay.php</filename>
+    </files>
+    <params addpath="/administrator/components/com_virtuemart/elements">
+	
+		<param type="vmjpluginwarning" />
+		
+		<param type="spacer" default="&lt;b&gt;Podstawowe ustawienia&lt;/b&gt;" />
+
+		<param name="dotpay_id" type="text"  label="ID konta Sprzedawcy" description=" &lt;/br&gt; &lt;/br&gt; ID konta w systemie Dotpay, na rzecz którego dokonywana jest patność." />
+		<param name="dotpay_pin" type="text"  label="PIN (opcjonalnie)" description=" &lt;/br&gt; &lt;/br&gt; 16-znakowy kod alfanumeryczny zapisany w sekcji: 'Ustawienia -> parametry URLC' konta Dotpay." />
+        <param name="dotpay_waluty" type="list" multiple="true" default="PLN" label="Akceptowalne waluty płatności:"  description=" &lt;/br&gt; &lt;/br&gt; Waluty w których będzie można zapłacić przez system Dotpay. &lt;/br&gt; Każda waluta spoza listy, będzie konwertowana na walutę, która jest 1 na liście." >
+            <option value="PLN">PLN</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="USD">USD</option>
+            <option value="JPY">JPY</option>
+            <option value="CZK">CZK</option>
+            <option value="SEK">SEK</option>
+        </param>
+        <param name="dotpay_lang" type="list"  default="pl" label="Język systemu płatności:"  description="" >
+            <option value="pl">polski</option>
+            <option value="en">angielski</option>
+            <option value="de">niemiecki</option>
+            <option value="it">włoski</option>
+            <option value="fr">francuski</option>
+            <option value="es">hiszpański</option>
+            <option value="cz">czeski</option>
+            <option value="ru">rosjski</option>
+            <option value="bg">bułgarski</option>
+        </param>
+        <param name="dotpay_przelewyonline" type="radio" default="0" label="Pokazuj tylko płatnośći online" description=" &lt;/br&gt; &lt;/br&gt;Jeżeli warto tego parametru wynosi 'Tak', sprawdzana jest możliwość księgowania transakcji na każdym kanale płatności. Jeżeli operator kanału nie będzie mógł zaksigować płatności w czasie rzeczywistym (np. bank nie księguje transakcji w weekend), to kanał taki nie będzie aktywny na stronie płatnśoci Dotpay. Nie będą aktywne również kanały offline (gotówkowe), np. przekaz pocztowy, Zapłać w Żabce, Moje rachunki, itp." >
+            <option value="0">COM_VIRTUEMART_NO</option>
+            <option value="1">COM_VIRTUEMART_YES</option>
+        </param>
+
+		<param type="spacer" />
+		<param type="spacer" default="&lt;b&gt;Ustawienia URLC &lt;/b&gt;" />
+				
+		<param name="dotpay_urlc" type="text" label="Adres dla potwierdzeń (URLC)" description="&lt;/br&gt; &lt;/br&gt; Ustaw ten adres w sekcji 'Ustawienia -> parametry URLC' konta Dotpay. &lt;/br&gt; Jeśli chcesz wykorzystywać jedno konto Dotpay do obsługi wielu sklepów - możesz zaznaczyć we wspomnianej sekcji opcję 'Zezwól na przyjęcie parametru URLC z zewnętrznego serwisu', &lt;br/&gt;skrypt automatycznie wysyła parametr URLC i nie trzeba go ustawiać na sztywno w panelu." size="140" />
+		
+		<param type="spacer" />
+		<param type="spacer" default="&lt;b&gt;Ustawienia statusów &lt;/b&gt;" />
+		
+		<param name="status_pending" type="vmorderstate" scope="com_virtuemart" default="P" label="Status zamówienia po złożeniu zamówienia" description="" />
+		<param name="status_success" type="vmorderstate" scope="com_virtuemart" default="C" label="Status zamówienia przy płatności poprawnej" description="" />
+		<param name="status_canceled" type="vmorderstate" scope="com_virtuemart" default="P" label="Status zamówienia przy płatności anulowanej (zalecana pending/oczekująca)" description="" />
+		
+		<param type="spacer" />
+		<param type="spacer" default="&lt;b&gt;Ustawienia dodatkowe &lt;/b&gt;" />
+		
+		<!-- kasa -->
+        <!-- DJ 2014-07-09 Zmieniam nazwę -->
+		<param name="cost_per_transaction" type="text"  label="Opłata dodatkowa wyboru płatności (stała)" description="&lt;/br&gt; &lt;/br&gt; Opłata doliczana do zamówienia, wyrażona w stałych wartościach.&lt;/br&gt; Np. wartość 5, doda 5 PLN (lub domyślnej waluty) do rachunku za używanie tej metody płatności. &lt;/br&gt; Przykładowe wartości: 5, 1.1, -1 " />
+		<param name="cost_percent_total" type="text"  label="Opłata dodatkowa zależna od wartości zamówienia (procent od zamówienia)" description="&lt;/br&gt; &lt;/br&gt; Opłata doliczana do zamówienia, wyrażona w % wartościach zamówienia.&lt;/br&gt; Np. wartość 12, to 12% wartości zamówienia. &lt;/br&gt; Przykładowe wartości: 5 (+5% do wartości zam.), 100 (+100% do wartości zam.), -5.5 " />
+
+        <param name="tax_id" type="vmtaxes" scope="com_virtuemart"  label="Podatek" description=" &lt;/br&gt; &lt;/br&gt;Stawka podatkowa dla płatności" />
+		<!-- inne -->
+
+		<param name="autoredirect" type="radio" default="1" label="Automatyczne przekierowanie" description=" &lt;/br&gt; &lt;/br&gt;Jeśli włączone, skrypt automatycznie przekierowuje użytkownika do systemu płatności po potwierdzeniu zamówienia.&lt;/br&gt;  Jeśli nie - użytkownik bedzie musiał kliknąć w grafikę z pola 'Wybierz grafikę płatności dla podstrony potwierdzenia zamówienia'" >
+			<option value="0">COM_VIRTUEMART_NO</option>
+			<option value="1">COM_VIRTUEMART_YES</option>
+		</param>
+		
+		<param name="powiadomienia" type="radio" default="1" label="Powiadomienia e-mail o zmianie statusu zamówienia" description=" &lt;/br&gt; &lt;/br&gt;Jeśli włączone, wysyła powiadomienie o zmianie statusu zamówienia na adres e-mail klienta.'" >
+			<option value="0">COM_VIRTUEMART_NO</option>
+			<option value="1">COM_VIRTUEMART_YES</option>
+		</param>
+		
+		<!-- wygląd -->		
+		<param name="payment_logos" type="vmfiles" directory="images/stories/virtuemart/payment" default="dotpay.jpg" label="Logo płatności w koszyku i zamówieniu" description=" &lt;/br&gt; &lt;/br&gt;Logo płatności widoczne w koszyku, wyborze płatności i procesie zamówienia. &lt;/br&gt;  &lt;b&gt;  Możesz dodać własne grafiki wrzucając je do katalogu /images/stories/virtuemart/payment &lt;/b&gt;" />	
+		
+		<param name="payment_image" type="imagelist" directory="images/stories/virtuemart/payment" default="dotpay.jpg" label="Wybierz grafikę płatności dla podstrony potwierdzenia zamówienia" description=" &lt;/br&gt; &lt;/br&gt;Widoczna w ostatnim etapie składania zamówienia. &lt;/br&gt;   &lt;b&gt;Możesz dodać własne grafiki wrzucając je do katalogu /images/stories/virtuemart/payment &lt;/b&gt;" />
+		
+		<param name="checkout_text" type="text" size="100" label="Tekst zamieszony pod grafiką na podstronie potwierdzenia zamówienia" default="Kliknij w powyższą grafikę aby dokonać płatności" />
+        <param name="dotpay_guzik_text" type="text" size="100" label="Tekst zamieszony na przycisku powrotu z systemu Dotpay do sklepu." default="Powrót do serwisu" />
+
+
+        <param type="spacer" default="
+		&lt;/td&gt; 
+		&lt;/tr&gt;
+		&lt;/table&gt;
+		&lt;table style='width: 100%'&gt;
+		&lt;tr&gt;
+		&lt;td&gt;
+		
+		&lt;center&gt; 
+
+		&lt;/br&gt; &lt;/br&gt;Stworzone przez:&lt;/br&gt;
+		&lt;a target='_blank' href='http://dodatkijoomla.pl/index.php?dotpay'&gt;   &lt;img border=0 src='http://dodatkijoomla.pl/images/logo_podpis_site_mini.png'&gt;  &lt;/a&gt;
+		&lt;p&gt; Szukaj najlepszych rozszerzeń dla Joomla na &lt;a target='_blank' href='http://dodatkijoomla.pl/index.php?dotpay'&gt;DodatkiJoomla.pl &lt;/a&gt;  &lt;/p&gt; 
+		&lt;/center&gt;
+		" />
+    </params>
+</install>
